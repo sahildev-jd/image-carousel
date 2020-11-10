@@ -69,8 +69,7 @@ const Carousel = (props) => {
   const firstIndex = (currentPage - 1) * imagesPerPage;
   const lastIndex = currentPage * imagesPerPage;
   const visibleImages = images && images.slice(firstIndex, lastIndex);
-  console.log(images, visibleImages);
-  debugger;
+
   return (
     <Container>
       <Button onClick={previousButtonHandler}>Previous</Button>
