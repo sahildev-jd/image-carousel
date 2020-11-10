@@ -3,7 +3,7 @@ const previewFile = (data, id) => {
   const preview = document.getElementById(id);
   const file = data;
   const reader = new FileReader();
-  console.log("previewFile", preview);
+
   reader.addEventListener(
     "load",
     () => {

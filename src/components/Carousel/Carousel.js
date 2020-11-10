@@ -29,15 +29,13 @@ const Carousel = (props) => {
   const [imagesPerPage, setPerPage] = useState(4);
 
   const getImagesPerPage = () => {
-    // debugger;
-    console.log("here");
     if (window) {
-      if (window.window.innerWidth < 900) {
-        setPerPage(3);
-      } else if (window.window.innerWidth < 700) {
-        setPerPage(2);
-      } else if (window.window.innerWidth < 600) {
+      if (window.innerWidth < 600) {
         setPerPage(1);
+      } else if (window.innerWidth < 700) {
+        setPerPage(2);
+      } else if (window.innerWidth < 900) {
+        setPerPage(3);
       } else {
         setPerPage(4);
       }
@@ -71,13 +69,14 @@ const Carousel = (props) => {
   const firstIndex = (currentPage - 1) * imagesPerPage;
   const lastIndex = currentPage * imagesPerPage;
   const visibleImages = images && images.slice(firstIndex, lastIndex);
-
+  console.log(images, visibleImages);
+  debugger;
   return (
     <Container>
       <Button onClick={previousButtonHandler}>Previous</Button>
       <ImagesContainer>
         {visibleImages.map((image, idx) => (
-          <Image data={image} key={idx} id={idx + 1} />
+          <Image data={image} id={idx + 1} key={image.lastModified} />
         ))}
       </ImagesContainer>
       <Button onClick={nextButtonHandler}>Next</Button>
