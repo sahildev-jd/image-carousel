@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import Modal from "../../UI/Modal/Modal";
 import previewFile from "./imageUtils";
 
 const Container = styled.div`
@@ -17,22 +18,50 @@ const ImageContainer = styled.div`
 const StyledImage = styled.img`
   max-width: 100%;
   height: auto;
+  ${(props) =>
+    props.inModal &&
+    css`
+      max-height: 80vh;
+    `}
 `;
 
 const Image = (props) => {
-  const { name = "x", imageUrl = "", data, id } = props;
+  const { data, id } = props;
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (data && id) {
       previewFile(data, id);
     }
-  }, []);
+  }, [showModal]);
+
+  const onClickImage = () => {
+    if (!showModal) {
+      setShowModal(true);
+    }
+  };
+  const closeModal = () => {
+    console.log("closeModal");
+    setShowModal(false);
+  };
+
+  const getImageComponent = (inModal) => (
+    <StyledImage
+      alt={id}
+      id={`img-${id}`}
+      onClick={onClickImage}
+      inModal={inModal}
+    />
+  );
 
   return (
     <Container>
-      <ImageContainer>
-        <StyledImage src={imageUrl} alt={name} id={`img-${id}`} />
-      </ImageContainer>
+      {showModal && (
+        <Modal show={showModal} onClose={closeModal}>
+          {getImageComponent(true)}
+        </Modal>
+      )}
+      <ImageContainer>{getImageComponent(false)}</ImageContainer>
     </Container>
   );
 };
