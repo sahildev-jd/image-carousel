@@ -29,9 +29,13 @@ const Image = (props) => {
   const { data, id } = props;
   const [showModal, setShowModal] = useState(false);
 
+  const getImageId = (inModal) => {
+    return inModal ? `img-${id}-modal` : `img-${id}`;
+  };
+
   useEffect(() => {
     if (data && id) {
-      previewFile(data, id);
+      previewFile(data, getImageId(showModal));
     }
   }, [showModal]);
 
@@ -48,7 +52,7 @@ const Image = (props) => {
   const getImageComponent = (inModal) => (
     <StyledImage
       alt={id}
-      id={`img-${id}`}
+      id={getImageId(inModal)}
       onClick={onClickImage}
       inModal={inModal}
     />
